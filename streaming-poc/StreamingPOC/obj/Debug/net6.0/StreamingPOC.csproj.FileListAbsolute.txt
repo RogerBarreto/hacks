@@ -1,0 +1,14 @@
+F:\repo\hack\streaming-poc\StreamingPOC\bin\Debug\net6.0\StreamingPOC.exe
+F:\repo\hack\streaming-poc\StreamingPOC\bin\Debug\net6.0\StreamingPOC.deps.json
+F:\repo\hack\streaming-poc\StreamingPOC\bin\Debug\net6.0\StreamingPOC.runtimeconfig.json
+F:\repo\hack\streaming-poc\StreamingPOC\bin\Debug\net6.0\StreamingPOC.dll
+F:\repo\hack\streaming-poc\StreamingPOC\bin\Debug\net6.0\StreamingPOC.pdb
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\StreamingPOC.GeneratedMSBuildEditorConfig.editorconfig
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\StreamingPOC.AssemblyInfoInputs.cache
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\StreamingPOC.AssemblyInfo.cs
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\StreamingPOC.csproj.CoreCompileInputs.cache
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\StreamingPOC.dll
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\refint\StreamingPOC.dll
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\StreamingPOC.pdb
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\StreamingPOC.genruntimeconfig.cache
+F:\repo\hack\streaming-poc\StreamingPOC\obj\Debug\net6.0\ref\StreamingPOC.dll
