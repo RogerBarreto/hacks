@@ -30,13 +30,11 @@ abstract class StreamingResultBuilder
 
     public abstract bool Append(StreamingResultBit bit);
 
-    public abstract object Build();
+    public abstract object BuildRaw();
 }
 
-abstract class StreamingResultBuilder<TComplete, TBit> 
+abstract class StreamingResultBuilder<TComplete, TBit> : StreamingResultBuilder
 {
-    public string Mimetype { get; }
-
     public abstract bool Append(TBit bit);
 
     public abstract TComplete Build();
@@ -81,12 +79,12 @@ interface ISKFunction
 
 class SemanticFunction : ISKFunction
 {
-    public SemanticFunction(SemanticConfig config)
+    public SemanticFunction(SemanticFunctionConfig config)
     {
         Config = config;
     }
 
-    public SemanticConfig Config { get; }
+    public SemanticFunctionConfig Config { get; }
 
     public Task<StreamingFunctionResult> StreamingInvokeAsync(SKContext context)
     {
@@ -100,39 +98,50 @@ class SemanticFunction : ISKFunction
     }
 }
 
-record SemanticConfig(string InputMimetype = "text/plain", string OutputMimetype = "text/plain");
-
+record SemanticFunctionConfig(string InputMimetype = "text/plain", string OutputMimetype = "text/plain");
 
 interface IKernel
 {
-    IAsyncEnumerable<StreamingResultBit> StreamingRunAsync(ContextVariables variables, ISKFunction[] pipeline);
+    IAsyncEnumerable<KernelResultBit> StreamingRunAsync(ContextVariables variables, ISKFunction[] pipeline);
 }
 
 class Kernel : IKernel
 {
-    public async IAsyncEnumerable<StreamingResultBit> StreamingRunAsync(ContextVariables variables, ISKFunction[] pipeline)
+    public async IAsyncEnumerable<KernelResultBit> StreamingRunAsync(ContextVariables variables, ISKFunction[] pipeline)
     {
         var context = new SKContext(variables);
 
         foreach(var function in pipeline)
         {
-            var result = await function.StreamingInvokeAsync(new SKContext(variables));
+            var result = await function.StreamingInvokeAsync(context);
             var builder = result.Builder;
             await foreach(var bit in result.StreamingResult)
             {
                 builder.Append(bit);
-                yield return bit;
+                yield return new(bit, builder);
             }
-            var finalResult = builder.Build();
+            var completeResult = builder.BuildRaw();
 
-            context.Variables["input"] = finalResult;
+            context.Variables["input"] = completeResult;
         }
+    }
+}
+
+record KernelResultBit
+{
+    public string Mimetype => Result.Mimetype;
+    public StreamingResultBit Result { get; }
+    public StreamingResultBuilder Builder { get; }
+    
+    public KernelResultBit(StreamingResultBit result, StreamingResultBuilder builder)
+    {
+        Result = result;
+        Builder = builder;
     }
 }
 
 class ContextVariables : Dictionary<string, object>
 {
-
 }
 
 class DefaultServiceSelector : IAIServiceSelector
@@ -177,6 +186,11 @@ class ImageBuilder : StreamingResultBuilder<Image, ImageBit>
         return true;
     }
 
+    public override object BuildRaw()
+    {
+        return Build();
+    }
+
     public override Image Build()
     {
         var fullImageContent = string.Empty;
@@ -187,17 +201,16 @@ class ImageBuilder : StreamingResultBuilder<Image, ImageBit>
         
         return new Image { Content = fullImageContent };
     }
+
+    public override bool Append(StreamingResultBit bit)
+    {
+        return Append(bit);
+    }
 }
 
-class ConnectorModalityService : IConnectorModalityService<string, ImageBit>
+class SpecificTextToImageConnectorModalityService : IConnectorModalityService<string, ImageBit>
 {
-    public ConnectorModalityService(string[] inputMimetypes, string outputMimetype)
-    {
-        InputMimetypes = inputMimetypes;
-        OutputMimetype = outputMimetype;
-    }
-
-    public IReadOnlyList<string> InputMimetypes { get; }
+    public IReadOnlyList<string> InputMimetypes { get; } = new[] { "text/plain" };
     public string OutputMimetype { get; }
 
     public IAsyncEnumerable<StreamingResultBit> GetStreamingResult(object input)
@@ -205,18 +218,20 @@ class ConnectorModalityService : IConnectorModalityService<string, ImageBit>
         return GetStreamingResult(input);
     }
 
-    public IAsyncEnumerable<StreamingResultBit<ImageBit>> GetStreamingResult(string input)
+    public async IAsyncEnumerable<StreamingResultBit<ImageBit>> GetStreamingResultAsync(string input)
     {
-        throw new NotImplementedException();
+        yield return new StreamingResultBit<ImageBit>("image/png", new ImageBit { Content = "1" });
+        yield return new StreamingResultBit<ImageBit>("image/png", new ImageBit { Content = "2" });
+        yield return new StreamingResultBit<ImageBit>("image/png", new ImageBit { Content = "3" });
     }
 
     public StreamingResultBuilder GetStreamingResultBuilder()
     {
-        throw new NotImplementedException();
+        return new ImageBuilder();
     }
 }
 
 interface IConnectorModalityService<TInput, TOutput> : IConnectorModalityService
 {
-    IAsyncEnumerable<StreamingResultBit<TOutput>> GetStreamingResult(TInput input);
+    IAsyncEnumerable<StreamingResultBit<TOutput>> GetStreamingResultAsync(TInput input);
 }
