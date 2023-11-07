@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\repo\\hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj": {}
+    "F:\\repo\\github-hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj": {}
   },
   "projects": {
-    "F:\\repo\\hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj": {
+    "F:\\repo\\github-hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\repo\\hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj",
+        "projectUniqueName": "F:\\repo\\github-hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj",
         "projectName": "StreamingPOC",
-        "projectPath": "F:\\repo\\hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj",
+        "projectPath": "F:\\repo\\github-hack\\streaming-poc\\StreamingPOC\\StreamingPOC.csproj",
         "packagesPath": "C:\\Users\\rbarreto\\.nuget\\packages\\",
-        "outputPath": "F:\\repo\\hack\\streaming-poc\\StreamingPOC\\obj\\",
+        "outputPath": "F:\\repo\\github-hack\\streaming-poc\\StreamingPOC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
