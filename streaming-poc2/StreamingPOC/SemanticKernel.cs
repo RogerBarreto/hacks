@@ -16,3 +16,34 @@ class ContextVariables : Dictionary<string, object>
 {
 
 }
+
+partial class Kernel : IKernel
+{
+    private readonly IAIServiceSelector _serviceSelector;
+
+    public Kernel()
+    {
+        this._serviceSelector = new DefaultServiceSelector();
+    }
+}
+
+class DefaultServiceSelector : IAIServiceSelector
+{
+    static List<IConnectorModalityService> RegisteredServices { get; } = new();
+
+    static public bool Register(IConnectorModalityService service)
+    {
+        if (!RegisteredServices.Contains(service))
+        {
+            RegisteredServices.Add(service);
+            return true;
+        }
+
+        return false;
+    }
+
+    public IConnectorModalityService? SelectAIServiceByModality(string? inputMimetype = "text/plain", string? outputMimetype = "text/plain")
+    {
+        return RegisteredServices.FirstOrDefault(s => s.InputTypes.Contains(inputMimetype) && s.OutputTypes.Contains(outputMimetype));
+    }
+}
