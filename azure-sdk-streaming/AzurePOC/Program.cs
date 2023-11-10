@@ -4,7 +4,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        string nonAzureOpenAIApiKey = "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";
+        string nonAzureOpenAIApiKey = "sk-***";
         var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
 
         var options = new CompletionsOptions()
