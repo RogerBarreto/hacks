@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34310.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugCheck", "BugCheck.csproj", "{3B05CE15-7404-49C2-BD32-6E8A8D3ED132}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B05CE15-7404-49C2-BD32-6E8A8D3ED132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B05CE15-7404-49C2-BD32-6E8A8D3ED132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B05CE15-7404-49C2-BD32-6E8A8D3ED132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B05CE15-7404-49C2-BD32-6E8A8D3ED132}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD046938-EB9B-4564-BDF6-0EF105E69D98}
+	EndGlobalSection
+EndGlobal
